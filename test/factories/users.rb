@@ -3,16 +3,16 @@ FactoryBot.define do
     first_name
     last_name
     password
-    email { 'MyString' }
+    email
     avatar { 'MyString' }
     type { '' }
   end
 
-  factory :developer, parent: :user do
+  factory :developer, parent: :user, aliases: [:assignee] do
     type { 'Developer' }
   end
 
-  factory :manager, parent: :user do
+  factory :manager, parent: :user, aliases: [:author] do
     type { 'Manager' }
   end
 
