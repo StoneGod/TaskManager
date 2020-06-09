@@ -1,16 +1,14 @@
 class Admin::UsersController < Admin::ApplicationController
-  def show
-    @user = User.find(params[:id])
-  end
+  before_action :find_user, only: [:show, :edit, :update, :destroy]
+
+  def show; end
 
   def index
     @q = User.ransack(params[:q])
-    @users = @q.result.order(:type).order(:id).page(params[:page]).per(10)
+    @users = @q.result.order(:type).order(:id).page(params[:page])
   end
 
-  def edit
-    @user = User.find(params[:id])
-  end
+  def edit; end
 
   def new
     @user = User.new
@@ -26,7 +24,6 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def update
-    @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to(admin_users_url)
     else
@@ -35,12 +32,15 @@ class Admin::UsersController < Admin::ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
     @user.destroy
     redirect_to(admin_users_path)
   end
 
   private
+
+  def find_user
+    @user = User.find(params[:id])
+  end
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password, :type)
