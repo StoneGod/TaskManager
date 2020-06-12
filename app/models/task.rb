@@ -1,5 +1,13 @@
 class Task < ApplicationRecord
   state_machine initial: :new_task do
+    state :new_task,
+          :in_development,
+          :in_qa,
+          :in_code_review,
+          :ready_for_release,
+          :released,
+          :archived
+
     event :develop do
       transition new_task: :in_development
       transition in_qa: :in_development
