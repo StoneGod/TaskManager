@@ -4,6 +4,5 @@ FactoryBot.define do
     description { generate :string }
     author
     assignee
-    expired_at { '2020-06-05' }
   end
 end
